@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
+const validator = require('mongoose-validator');
+
+const emailValidate = validator({
+  validator: 'isEmail',
+  message: 'No es un email, payaso.'
+});
+
+const passValidate = validator({
+  validator: 'isLength',
+  arguments: [8],
+  message: 'Must have at least 8 charachters'
+});
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -13,14 +25,16 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    validate: passValidate
   },
   email: {
     type: String,
     required: true,
     unique: true,
     maxlength: 100,
-    trim: true
+    trim: true,
+    validate: emailValidate
   }
 });
 
@@ -34,19 +48,15 @@ UserSchema.methods.toJSON = function () {
 UserSchema.pre('save', function (next) {
   const user = this;
   if (user.isModified('password')) {
-    bcrypt.genSalt(10).then(salt => {
-      bcrypt.hash(user.password, salt).then(hash => {
-        bcrypt.compare(user.password, hash).then(result => {
-          console.log(result, user.password, hash);
-          user.password = hash;
-          next();
-        })
-      })
+    bcrypt.hash(user.password, 10).then(hash => {
+      user.password = hash;
+      next()
     })
   } else {
-    next();
   }
 });
+
+
 
 const User = mongoose.model('user', UserSchema);
 
