@@ -8,12 +8,6 @@ const emailValidate = validator({
   message: 'No es un email, payaso.'
 });
 
-const passValidate = validator({
-  validator: 'isLength',
-  arguments: [8],
-  message: 'Must have at least 8 charachters'
-});
-
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -26,7 +20,8 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    validate: passValidate
+    validate: passValidate,
+    minlength: 8
   },
   email: {
     type: String,
@@ -34,7 +29,8 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     maxlength: 100,
     trim: true,
-    validate: emailValidate
+    validate: emailValidate,
+    active: false
   }
 });
 
@@ -61,3 +57,4 @@ UserSchema.pre('save', function (next) {
 const User = mongoose.model('user', UserSchema);
 
 module.exports = User;
+
