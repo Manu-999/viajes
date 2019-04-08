@@ -20,7 +20,6 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    validate: passValidate,
     minlength: 8
   },
   email: {

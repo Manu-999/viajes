@@ -8,7 +8,7 @@ const TravelSchema = new mongoose.Schema({
     maxlength: 100
   },
   date: {
-    type: Date,
+    type: String,
     require: true,
   },
   description: {
@@ -24,3 +24,4 @@ const TravelSchema = new mongoose.Schema({
 const Travel = mongoose.model('travel', TravelSchema);
 
 module.exports = Travel;
+
