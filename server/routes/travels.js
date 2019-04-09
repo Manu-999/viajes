@@ -14,14 +14,10 @@ router.post('/', (req, res) => {
 
 // Reading Data
 
-router.get('/', (req, res) => {
-  Travel.find().exec((err, travels) => {
-    try {
-      res.status(200).send(travels);
-    } catch (err) {
-      res.status(400).send(err.message);
-    }
-  })
+router.get('/', async (req, res) => {
+  await Travel.find({})
+    .then((travels) => res.status(200).send(travels))
+    .catch((err) => res.status(400).send(err.message))
 });
 
 // Updating data
@@ -33,7 +29,7 @@ router.patch('/:id', (req, res) => {
       travel.updateOne(req.body);
       res.status(200).send({ message: "Viaje actualizado." })
     })
-    .catch((err) => res.status(400).send(err));
+    .catch((err) => res.status(400).send(err))
 });
 
 // Deleting data
@@ -45,7 +41,7 @@ router.delete('/:id', (req, res) => {
       travel.remove();
       res.status(200).send({ message: "Viaje eliminado" })
     })
-    .catch((err) => res.status(400).send(err.message));
+    .catch((err) => res.status(400).send(err.message))
 });
 
 module.exports = router;
