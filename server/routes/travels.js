@@ -35,16 +35,27 @@ router.post('/update', (req, res) => {
 });
 
 // Deleting data
-router.post('/delete', (req, res) => {
-  Travel.findOne(req.body).exec(async (err, travel) => {
+// router.post('/delete', (req, res) => {
+//   Travel.findOne(req.body).exec(async (err, travel) => {
+//     try {
+//       await travel.remove();
+//       res.status(400).send({ message: "Viaje eliminado correctamente." });
+//     } catch (err) {
+//       await res.status(400).send(err.message);
+//     }
+//   })
+// });
+
+router.post('/:id', async (req, res) => {
+  const id = req.params.id;
+  Travel.findById(id).exec(async (err, travel) => {
     try {
       await travel.remove();
-      res.status(400).send({ message: "Viaje eliminado correctamente." });
+      res.status(200).send({ message: "Viaje eliminado" });
     } catch (err) {
       await res.status(400).send(err.message);
     }
   })
 });
-
 
 module.exports = router;

@@ -8,7 +8,7 @@ const TravelSchema = new mongoose.Schema({
     maxlength: 100
   },
   date: {
-    type: String,
+    type: Date,
     require: true,
   },
   description: {
