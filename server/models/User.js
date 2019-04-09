@@ -30,6 +30,10 @@ const UserSchema = new mongoose.Schema({
     trim: true,
     validate: emailValidate,
     active: false
+  },
+  image: {
+    type: String,
+    required: true
   }
 });
 
@@ -50,7 +54,6 @@ UserSchema.pre('save', function (next) {
   } else {
   }
 });
-
 
 
 const User = mongoose.model('user', UserSchema);
