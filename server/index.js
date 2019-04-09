@@ -9,7 +9,9 @@ const server = express();
 server.use(express.json());
 
 server.use(require('./routes'));
+server.use('/public', express.static(`${__dirname}/public`));
 
 server.listen(PORT, () => {
-  console.log(`Server ready on http://localhost://${PORT}`);
+  console.log(`Server ready on http://localhost:${PORT}`);
 });
+

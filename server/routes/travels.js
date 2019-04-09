@@ -29,11 +29,11 @@ router.get('/', (req, res) => {
 router.patch('/:id', (req, res) => {
   const id = req.params.id;
   Travel.findById(id)
-    .then((err, travel) => {
+    .then((travel) => {
       travel.updateOne(req.body);
       res.status(200).send({ message: "Viaje actualizado." })
     })
-    .catch(res.status(400).send(err))
+    .catch((err) => res.status(400).send(err));
 });
 
 // Deleting data
@@ -41,11 +41,11 @@ router.patch('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
   Travel.findById(id)
-    .then((err, travel) => {
+    .then((travel) => {
       travel.remove();
       res.status(200).send({ message: "Viaje eliminado" })
     })
-    .catch(res.status(400).send(err.message))
+    .catch((err) => res.status(400).send(err.message));
 });
 
 module.exports = router;
